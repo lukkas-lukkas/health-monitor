@@ -2,10 +2,12 @@
 
 namespace HealthMonitor\Infrastructure\Kafka;
 
+use Enqueue\Consumption\QueueConsumer;
 use Enqueue\RdKafka\RdKafkaConnectionFactory;
 use HealthMonitor\Domain\Topic;
 use Interop\Queue\Context;
 use Interop\Queue\Message;
+use Interop\Queue\Processor;
 use Interop\Queue\Producer;
 use Interop\Queue\Topic as InteropTopic;
 
@@ -36,6 +38,18 @@ class KafkaManager
     public function createProducer(): Producer
     {
         return $this->getContext()->createProducer();
+    }
+
+    public function createConsumer(Topic $topic, Processor $processor): QueueConsumer
+    {
+        $consumer = new QueueConsumer($this->getContext());
+        $consumer->bind($topic->value, $processor);
+        return $consumer;
+    }
+
+    public function setGroupId(string $groupId): void
+    {
+        $this->config['global']['group.id'] = $groupId;
     }
 
     private function getContext(): Context
