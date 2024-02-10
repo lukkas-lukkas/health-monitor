@@ -4,6 +4,7 @@ namespace HealthMonitor\UI\Http\Controllers;
 
 use HealthMonitor\Application\StoreHealthData\HealthDataDTO;
 use HealthMonitor\Application\StoreHealthData\StoreHealthDataHandler;
+use HealthMonitor\Domain\DuplicatedResourceException;
 use HealthMonitor\UI\Http\Rules\DateGreaterThan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -36,8 +37,14 @@ class StoreHealthDataController extends Controller
 
         $dto = HealthDataDTO::fromArray($data);
 
-        $created = $this->handler->handle($dto);
-
-        return response()->json($created);
+        try {
+            $created = $this->handler->handle($dto);
+            return response()->json($created);
+        } catch (DuplicatedResourceException $exception) {
+            return response()->json(
+                ['message' => $exception->getMessage()],
+                $exception->getCode(),
+            );
+        }
     }
 }
