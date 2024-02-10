@@ -3,6 +3,7 @@
 namespace HealthMonitor\Application\StoreHealthData;
 
 use HealthMonitor\Domain\HealthData;
+use HealthMonitor\Domain\IdGenerator;
 
 class StoreHealthDataHandler
 {
@@ -13,8 +14,10 @@ class StoreHealthDataHandler
 
     public function handle(HealthDataDTO $dto): array
     {
+        $id = $this->idGenerator->generate($dto->userID, $dto->startedAt, $dto->finishedAt);
+
         $hd = new HealthData(
-            $this->idGenerator->generate($dto),
+            $id,
             $dto->userID,
             $dto->startedAt,
             $dto->finishedAt,
