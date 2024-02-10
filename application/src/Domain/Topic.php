@@ -2,7 +2,7 @@
 
 namespace HealthMonitor\Domain;
 
-enum Topics: string
+enum Topic: string
 {
     case NEW_HEALTH_DATA = 'new-health-data-added-event';
 }
