@@ -56,6 +56,11 @@ $app->singleton(
     \HealthMonitor\Infrastructure\Kafka\KafkaProducer::class,
 );
 
+$app->singleton(
+    \HealthMonitor\Domain\AnomaliesAnalyser::class,
+    \HealthMonitor\Infrastructure\Anomalies\MockAnomaliesAnalyser::class,
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
