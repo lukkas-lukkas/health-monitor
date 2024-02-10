@@ -5,8 +5,16 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY ./application /application
 WORKDIR /application
 
-RUN apt-get update && apt-get install -y ${PHPIZE_DEPS} zip git
+RUN apt-get update && apt-get install -y ${PHPIZE_DEPS} zip git librdkafka-dev
 RUN docker-php-ext-install pdo pdo_mysql
+
+RUN git clone https://github.com/arnaud-lb/php-rdkafka.git \
+    && cd php-rdkafka \
+    && phpize \
+    && ./configure \
+    && make all -j 5 \
+    && make install \
+    && docker-php-ext-enable rdkafka
 
 EXPOSE 9501
 
