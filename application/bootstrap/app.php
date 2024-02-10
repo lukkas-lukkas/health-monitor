@@ -58,7 +58,7 @@ $app->singleton(
 
 $app->singleton(
     \HealthMonitor\Domain\AnomaliesAnalyser::class,
-    \HealthMonitor\Infrastructure\Anomalies\MockAnomaliesAnalyser::class,
+    \HealthMonitor\Infrastructure\Anomalies\OpenAIAnomaliesAnalyser::class,
 );
 
 /*

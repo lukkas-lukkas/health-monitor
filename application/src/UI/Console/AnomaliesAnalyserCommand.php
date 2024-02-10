@@ -28,6 +28,7 @@ class AnomaliesAnalyserCommand extends ConsumerCommand
 
         $id = $data['id'];
 
+        $this->info(sprintf('Start analyse: %s', $id));
         $this->handler->handle($id);
 
         $this->info(sprintf("Processed: %s", $id));
