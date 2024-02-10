@@ -31,6 +31,22 @@ class SqlBuilderHealthDataRepository implements HealthDataRepository
         }, $hds->all());
     }
 
+    public function getById(string $healthDataId): ?HealthData
+    {
+        $hd = $this->connection()
+            ->where('id', '=', $healthDataId)
+            ->first();
+
+        return is_null($hd) ? null : HealthData::fromArray((array) $hd);
+    }
+
+    public function update(HealthData $hd): void
+    {
+        $this->connection()
+            ->where('id', '=', $hd->id)
+            ->update($hd->toArray());
+    }
+
     private function connection(): Builder
     {
         return DB::table($this->table);

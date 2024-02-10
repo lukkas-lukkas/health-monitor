@@ -2,6 +2,7 @@
 
 namespace HealthMonitor\UI\Console;
 
+use HealthMonitor\Application\AnomaliesAnalyse\AnomaliesAnalyseHandler;
 use HealthMonitor\Domain\Topic;
 use HealthMonitor\Infrastructure\Kafka\KafkaManager;
 use Interop\Queue\Message;
@@ -16,6 +17,7 @@ class AnomaliesAnalyserCommand extends ConsumerCommand
 
     public function __construct(
         KafkaManager $kafkaManager,
+        private AnomaliesAnalyseHandler $handler,
     ) {
         parent::__construct($kafkaManager);
     }
@@ -25,6 +27,8 @@ class AnomaliesAnalyserCommand extends ConsumerCommand
         $data = json_decode($message->getBody(), true);
 
         $id = $data['id'];
+
+        $this->handler->handle($id);
 
         $this->info(sprintf("Processed: %s", $id));
     }

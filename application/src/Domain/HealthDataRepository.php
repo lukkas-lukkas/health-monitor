@@ -13,4 +13,8 @@ interface HealthDataRepository
      * @return HealthData[]
      */
     public function getByUser(string $userID): array;
+
+    public function getById(string $healthDataId): ?HealthData;
+
+    public function update(HealthData $hd): void;
 }

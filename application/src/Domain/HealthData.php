@@ -29,6 +29,11 @@ class HealthData
         $this->anomalies = $anomalies;
     }
 
+    public function getAnomalies(): ?string
+    {
+        return $this->anomalies;
+    }
+
     public function toArray(): array
     {
         return [
