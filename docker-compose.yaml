@@ -1,0 +1,15 @@
+services:
+  api:
+    build: .
+    image: image-health-monitor
+    container_name: api-health-monitor
+    volumes:
+      - ./application:/application
+    ports:
+      - 9501:9501
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
