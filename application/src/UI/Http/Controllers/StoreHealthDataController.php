@@ -2,6 +2,8 @@
 
 namespace HealthMonitor\UI\Http\Controllers;
 
+use HealthMonitor\Application\StoreHealthData\HealthDataDTO;
+use HealthMonitor\Application\StoreHealthData\StoreHealthDataHandler;
 use HealthMonitor\UI\Http\Rules\DateGreaterThan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -9,6 +11,10 @@ use Illuminate\Support\Facades\Validator;
 
 class StoreHealthDataController extends Controller
 {
+    public function __construct(private StoreHealthDataHandler $handler)
+    {
+    }
+
     public function __invoke(string $userId, Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -28,6 +34,10 @@ class StoreHealthDataController extends Controller
         $data = $validator->validated();
         $data['user_id'] = $userId;
 
-        return response()->json($data);
+        $dto = HealthDataDTO::fromArray($data);
+
+        $created = $this->handler->handle($dto);
+
+        return response()->json($created);
     }
 }
