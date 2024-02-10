@@ -12,6 +12,7 @@ class StoreHealthDataHandler
     public function __construct(
         private IdGenerator $idGenerator,
         private HealthDataRepository $repository,
+        private Producer $producer,
     ) {
     }
 
@@ -32,6 +33,8 @@ class StoreHealthDataHandler
         );
 
         $this->repository->store($hd);
+
+        $this->producer->produce($hd);
 
         return $hd;
     }
