@@ -2,7 +2,7 @@
 
 Application to receive health data from smart devices and use AI to found anomalies.
 
-You can send health data of some activity by an endpoint and get some anomalies found by AI running asynchronously
+You can send health data of some activity by an endpoint and get some anomalies find by AI running asynchronously
 in another one.
 
 ## Components
