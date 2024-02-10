@@ -8,4 +8,9 @@ interface HealthDataRepository
      * @throws DuplicatedResourceException
      */
     public function store(HealthData $healthData): void;
+
+    /**
+     * @return HealthData[]
+     */
+    public function getByUser(string $userID): array;
 }
