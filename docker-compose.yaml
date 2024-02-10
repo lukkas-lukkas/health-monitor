@@ -10,6 +10,19 @@ services:
     networks:
       - app-network
 
+  worker:
+    build: .
+    image: image-health-monitor
+    container_name: worker-health-monitor
+    restart: on-failure
+    volumes:
+      - ./application:/application
+    command: php artisan anomalies:analyse
+    depends_on:
+      - kafka-ui
+    networks:
+      - app-network
+
   database:
     image: mysql:8
     container_name: db-health-monitor
