@@ -2,6 +2,7 @@
 
 return [
     'client' => [
+        'verify' => env('APP_ENV') === 'prod',
         'base_uri' => env('OPENAI_API_URL'),
         'timeout' => (int) env('OPENAI_API_TIMEOUT'),
     ],
