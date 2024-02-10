@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use HealthMonitor\UI\Console\AnomaliesAnalyserCommand;
 use HealthMonitor\UI\Console\DeviceSimulatorCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
 
         $this->commands = [
             DeviceSimulatorCommand::class,
+            AnomaliesAnalyserCommand::class,
         ];
 
         require base_path('routes/console.php');
