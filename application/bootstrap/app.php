@@ -41,6 +41,16 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    \HealthMonitor\Domain\IdGenerator::class,
+    \HealthMonitor\Infrastructure\Hash\Md5IdGenerator::class,
+);
+
+$app->singleton(
+    \HealthMonitor\Domain\HealthDataRepository::class,
+    \HealthMonitor\Infrastructure\Persistence\SqlBuilderHealthDataRepository::class,
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
