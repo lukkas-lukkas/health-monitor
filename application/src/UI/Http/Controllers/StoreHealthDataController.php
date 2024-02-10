@@ -39,7 +39,7 @@ class StoreHealthDataController extends Controller
 
         try {
             $created = $this->handler->handle($dto);
-            return response()->json($created);
+            return response()->json($created->toArray());
         } catch (DuplicatedResourceException $exception) {
             return response()->json(
                 ['message' => $exception->getMessage()],

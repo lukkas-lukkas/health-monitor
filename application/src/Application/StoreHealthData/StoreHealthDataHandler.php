@@ -18,7 +18,7 @@ class StoreHealthDataHandler
     /**
      * @throws DuplicatedResourceException
      */
-    public function handle(HealthDataDTO $dto): array
+    public function handle(HealthDataDTO $dto): HealthData
     {
         $id = $this->idGenerator->generate($dto->userID, $dto->startedAt, $dto->finishedAt);
 
@@ -33,6 +33,6 @@ class StoreHealthDataHandler
 
         $this->repository->store($hd);
 
-        return $hd->toArray();
+        return $hd;
     }
 }
