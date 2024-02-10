@@ -14,6 +14,11 @@ class DeviceSimulatorCommand extends Command
 
     public function handle(StoreHealthDataHandler $handler): void
     {
+        if (env('ENABLE_AI')) {
+            $this->error("ERROR: Simulator disabled when using AI, try set env ENABLE_AI to false and try again.");
+            return;
+        }
+
         $quantity = $this->option('quantity');
         $delay = $this->option('delay');
 

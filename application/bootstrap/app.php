@@ -58,7 +58,13 @@ $app->singleton(
 
 $app->singleton(
     \HealthMonitor\Domain\AnomaliesAnalyser::class,
-    \HealthMonitor\Infrastructure\Anomalies\OpenAIAnomaliesAnalyser::class,
+    function () use ($app) {
+        if (env('ENABLE_AI')) {
+            return $app->make(\HealthMonitor\Infrastructure\Anomalies\OpenAIAnomaliesAnalyser::class);
+        }
+
+        return $app->make(\HealthMonitor\Infrastructure\Anomalies\MockAnomaliesAnalyser::class);
+    }
 );
 
 /*

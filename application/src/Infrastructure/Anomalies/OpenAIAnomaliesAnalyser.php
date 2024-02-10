@@ -68,11 +68,11 @@ class OpenAIAnomaliesAnalyser implements AnomaliesAnalyser
 
     private function exceptionHandler(ResponseInterface $response, HealthData $healthData)
     {
-        Log::error('openai_integration_error', [
+        throw new RuntimeException(json_encode([
+            'message' => 'openai_integration_error',
             'status_code' => $response->getStatusCode(),
             'body' => $response->getBody()->getContents(),
             'heath_data_id' => $healthData->id,
-        ]);
-        throw new RuntimeException('OpenAI integration error');
+        ]));
     }
 }

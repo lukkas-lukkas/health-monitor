@@ -38,11 +38,12 @@ abstract class ConsumerCommand extends Command implements Processor
             $this->consume($message);
             return self::ACK;
         } catch (\Throwable $throwable) {
-            Log::error('consumer_command_error', [
+            $this->error(json_encode([
+                'message' => 'consumer_command_error',
                 'topic' => $this->topic->value,
                 'consumer_group' => $this->consumerGroup,
                 'exception' => $throwable,
-            ]);
+            ]));
 
             // Here we could send to a DLQ, but let's just reject
             return self::REJECT;
