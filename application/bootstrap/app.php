@@ -51,6 +51,11 @@ $app->singleton(
     \HealthMonitor\Infrastructure\Persistence\SqlBuilderHealthDataRepository::class,
 );
 
+$app->singleton(
+    \HealthMonitor\Domain\QueueProducer::class,
+    \HealthMonitor\Infrastructure\Kafka\KafkaProducer::class,
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
