@@ -7,3 +7,9 @@ setup:
 
 up:
 	docker-compose up -d
+
+migrate:
+	make exec php artisan migrate
+
+exec:
+	docker exec api-health-monitor $(filter-out $@,$(MAKECMDGOALS))
