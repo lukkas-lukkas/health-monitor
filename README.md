@@ -20,7 +20,7 @@ in another one.
 
 Just clone this repository, run setup and migrations
 
-```shell
+``` shell
 git clone https://github.com/lukkas-lukkas/health-monitor.git
 cd health-monitor
 make setup
@@ -38,6 +38,12 @@ seeing a job sending a lot of data and consuming it on background.
 We use OpenAI API, so to enable it you must have an api-key provided by OpenAI. 
 
 Then set the environment variables `ENABLE_AI=true` and `OPENAI_API_TOKEN=(your-api-key)`
+
+After that restart the containers running:
+``` shell
+docker-compose down
+docker-compose up -d
+```
 
 ### Sending data
 ``` curl
@@ -69,7 +75,7 @@ The anomalies can have some seconds to appear, you can check the execution runni
 As mentioned, you can run a simulator to see the app sending a lot of random information to be processed.
 As long as the AI is disabled.
 
-```shell
+``` shell
 make run-simulator quantity=10 delay=2
 ```
 The parameters quantity and delay are optionals, with 100 and 1 as default respectively.
