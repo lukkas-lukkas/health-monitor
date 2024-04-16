@@ -1,9 +1,17 @@
 # Health Monitor
 
-Application to receive health data from smart devices and use AI to found anomalies.
+Application to receive health data from smart devices and use AI to find anomalies.
 
-You can send health data of some activity by an endpoint and get some anomalies find by AI running asynchronously
+You can send health data of some activity by an endpoint and get some anomalies found by AI running asynchronously
 in another one.
+
+## Stack and technologies
+- PHP 8.2
+- Laravel 10
+- Docker & Docker compose
+- MySql 8
+- Kafka
+- OpenAI API
 
 ## Components
 
@@ -26,20 +34,20 @@ cd health-monitor
 make setup
 make migrate
 ```
-🚩 **Tip:** If you see an error when try to run the migrations, just wait a second and try again, take container need this time.
+🚩 **Tip:** If you see an error when trying to run the migrations, wait a second and try again; the container needs some time to be run.
 
 ## Usage
 
-First of all, you need now that **AI is disabled** by default. And with this you can use the simulator to have some fun
-seeing a job sending a lot of data and consuming it on background.
+First, you must know that **AI is disabled** by default. And with this, you can use the simulator to have some fun
+seeing a job sending a lot of data and consuming it in the background.
 
 ### Enable AI
 
-We use OpenAI API, so to enable it you must have an api-key provided by OpenAI. 
+We use OpenAI API, so you must have a key provided by OpenAI to enable it. 
 
 Then set the environment variables `ENABLE_AI=true` and `OPENAI_API_TOKEN=(your-api-key)`
 
-After that restart the containers running:
+After that, restart the containers running:
 ``` shell
 docker-compose down
 docker-compose up -d
@@ -58,7 +66,7 @@ curl --location 'http://localhost:9501/api/v1/users/{userID}/health-data' \
 ```
 | Field               | Description                                      |
 |---------------------|--------------------------------------------------|
-| userID              | Any string id, you will use it to get the result |
+| userID              | Any string ID you will use to get the result |
 | started_at          | When the activity started                        |
 | finished_at         | When the activity finished                       |
 | avg_bpm             | Average bit per minute                           |
@@ -68,7 +76,7 @@ curl --location 'http://localhost:9501/api/v1/users/{userID}/health-data' \
 ``` curl
 curl --location 'http://localhost:9501/api/v1/users/{userID}/health-data'
 ```
-The anomalies can have some seconds to appear, you can check the execution running `docker logs -f worker-health-monitor`
+The anomalies can have some seconds to appear, and you can check the execution running `docker logs -f worker-health-monitor`
 
 ## Simulator
 
@@ -78,6 +86,6 @@ As long as the AI is disabled.
 ``` shell
 make run-simulator quantity=10 delay=2
 ```
-The parameters quantity and delay are optionals, with 100 and 1 as default respectively.
+The parameters quantity and delay are optional, with 100 and 1 as default, respectively.
 
-Now you can check the values on the database table ``health_data`` and the logs of the worker.
+Now you can check the values on the database table ``health_data`` and the worker's logs.
